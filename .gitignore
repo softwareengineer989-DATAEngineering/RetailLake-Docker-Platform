@@ -42,3 +42,10 @@ spark-warehouse/
 
 # Misc
 *.tmp
+
+
+
+*.env
+
+postgres_data/
+
