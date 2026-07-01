@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Environment
+.env
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Airflow
+airflow/logs/
+
+# dbt
+target/
+dbt_packages/
+
+# PySpark
+spark-warehouse/
+
+# Docker
+*.tar
+
+# Testing
+.pytest_cache/
+
+# Misc
+*.tmp
