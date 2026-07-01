@@ -77,6 +77,9 @@ services:
     volumes:
 
       - ./spark:/app/spark
+      - ./src:/app/src
+      - ./duckdb:/app/duckdb
+      - ./logs:/app/logs
 
     networks:
 
