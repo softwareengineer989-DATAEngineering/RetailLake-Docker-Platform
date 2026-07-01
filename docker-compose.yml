@@ -53,6 +53,36 @@ services:
 
       - retaillake-network
 
+
+  spark:
+
+    build:
+
+      context: .
+
+      dockerfile: docker/spark/Dockerfile
+
+    image: retaillake/spark:1.0.0
+
+    container_name: retail-spark
+
+    restart: unless-stopped
+
+    depends_on:
+
+      postgres:
+
+        condition: service_healthy
+
+    volumes:
+
+      - ./spark:/app/spark
+
+    networks:
+
+      - retaillake-network
+
+
 volumes:
 
   postgres_data:
@@ -62,3 +92,8 @@ networks:
   retaillake-network:
 
     driver: bridge
+
+
+
+
+
