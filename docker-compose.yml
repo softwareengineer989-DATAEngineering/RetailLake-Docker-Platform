@@ -104,7 +104,7 @@ services:
 
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
 
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://retail_user:retail_password@postgres:5432/retail_db
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
 
       AIRFLOW_UID: 50000
 
