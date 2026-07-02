@@ -85,6 +85,46 @@ services:
 
       - retaillake-network
 
+  airflow:
+    image: retaillake/airflow:1.0.0
+
+    build:
+      context: .
+      dockerfile: docker/airflow/Dockerfile
+
+    container_name: retail-airflow
+
+    restart: unless-stopped
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://retail_user:retail_password@postgres:5432/retail_db
+
+      AIRFLOW_UID: 50000
+
+    ports:
+
+      - "8080:8080"
+
+    volumes:
+
+      - ./airflow/dags:/opt/airflow/dags
+
+      - ./airflow/logs:/opt/airflow/logs
+
+      - ./airflow/plugins:/opt/airflow/plugins
+
+    command: standalone
+
+    networks:
+
+      - retaillake-network
 
 volumes:
 
