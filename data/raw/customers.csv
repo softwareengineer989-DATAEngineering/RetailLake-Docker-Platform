@@ -1,0 +1,11 @@
+customer_id,first_name,last_name,email,city,country,signup_date
+1,John,Doe,john.doe@gmail.com,New York,USA,2024-01-15
+2,Jane,Smith,jane.smith@gmail.com,London,UK,2024-02-10
+3,Amit,Sharma,amit.sharma@gmail.com,Mumbai,India,2024-03-12
+4,Sara,Wilson,sara.wilson@gmail.com,Sydney,Australia,2024-04-20
+5,David,Brown,david.brown@gmail.com,Toronto,Canada,2024-05-18
+6,Priya,Patel,priya.patel@gmail.com,Ahmedabad,India,2024-05-22
+7,Michael,Johnson,michael.johnson@gmail.com,Chicago,USA,2024-06-02
+8,Emily,Davis,emily.davis@gmail.com,Berlin,Germany,2024-06-15
+9,Rahul,Verma,rahul.verma@gmail.com,Delhi,India,2024-06-20
+10,Sophia,Miller,sophia.miller@gmail.com,Paris,France,2024-06-25

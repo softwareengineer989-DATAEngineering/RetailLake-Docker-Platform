@@ -76,14 +76,17 @@ services:
 
     volumes:
 
-      - ./spark:/app/spark
       - ./src:/app/src
       - ./duckdb:/app/duckdb
       - ./logs:/app/logs
+      - ./data:/app/data
 
     networks:
 
       - retaillake-network
+
+    environment:
+      PYTHONPATH: /app/src
 
   airflow:
     image: retaillake/airflow:1.0.0
