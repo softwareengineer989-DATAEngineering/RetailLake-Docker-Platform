@@ -34,6 +34,8 @@ class BasePipeline(ABC):
 
         self.audit.complete("SUCCESS")
 
+        self.metrics.stop()
+
         AuditLogger.log(self.audit)
 
         self.logger.info(
@@ -44,7 +46,6 @@ class BasePipeline(ABC):
             f"Execution Duration : {self.metrics.duration:.2f} seconds"
         )
 
-        self.metrics.stop()
 
 
         self.logger.info("=" * 60)
