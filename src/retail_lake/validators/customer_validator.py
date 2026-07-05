@@ -1,11 +1,20 @@
-from pyspark.sql import DataFrame
+from retail_lake.quality.quality_engine import DataQualityEngine
+from retail_lake.utils.logger import get_logger
 
+def validate_customer_data(df):
 
-def validate_customer_data(df: DataFrame):
+    logger = get_logger("CustomerValidator")
 
-    count = df.count()
+    logger.info("Starting validation")
 
-    if count == 0:
-        raise Exception("Customer dataframe is empty.")
+    logger.info("Validation completed")
 
-    print(f"Validation Passed : {count} records")
+    engine = DataQualityEngine()
+
+    report = engine.run(df)
+
+    logger.info(report.summary())
+
+    print(report.summary())
+
+    return report
