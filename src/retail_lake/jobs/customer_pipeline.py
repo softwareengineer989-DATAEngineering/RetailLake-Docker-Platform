@@ -22,11 +22,23 @@ class CustomerPipeline(BasePipeline):
 
         df = read_customer_file(spark)
 
-        validate_customer_data(df)
+        self.audit.records_read = df.count()
+
+        report = validate_customer_data(df)
+
+        self.audit.records_rejected = (
+
+                report.null_records
+
+                + report.duplicate_records
+
+        )
 
         df = transform_customer_data(df)
 
         write_customer_data(df)
+
+        self.audit.records_written = df.count()
 
         spark.stop()
 
