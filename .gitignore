@@ -49,3 +49,8 @@ spark-warehouse/
 
 postgres_data/
 
+
+# Generated Spark output
+data/processed/
+logs/
+*.crc
