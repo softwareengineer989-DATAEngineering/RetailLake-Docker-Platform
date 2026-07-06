@@ -1,10 +1,7 @@
-from pyspark.sql import SparkSession
 
 from retail_lake.base.base_pipeline import BasePipeline
-from retail_lake.readers.customer_reader import read_customer_file
-from retail_lake.transformers.customer_transformer import transform_customer_data
-from retail_lake.validators.customer_validator import validate_customer_data
-from retail_lake.writers.customer_writer import write_customer_data
+from retail_lake.config.spark_config import create_spark_session
+from retail_lake.services.customer_service import CustomerService
 
 
 class CustomerPipeline(BasePipeline):
@@ -14,27 +11,22 @@ class CustomerPipeline(BasePipeline):
 
     def run(self):
 
-        from retail_lake.config.spark_config import create_spark_session
         spark = create_spark_session()
-        df = read_customer_file(spark)
 
-        self.audit.records_read = df.count()
+        service = CustomerService()
 
-        report = validate_customer_data(df)
+        result = service.execute(spark)
+
+        report = result["report"]
+
+        self.audit.records_read = result["records_read"]
+
+        self.audit.records_written = result["records_written"]
 
         self.audit.records_rejected = (
-
                 report.null_records
-
                 + report.duplicate_records
-
         )
-
-        df = transform_customer_data(df)
-
-        write_customer_data(df)
-
-        self.audit.records_written = df.count()
 
         spark.stop()
 
