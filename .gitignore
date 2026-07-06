@@ -10,7 +10,7 @@ venv/
 # IDE
 .idea/
 .vscode/
-
+-
 # Environment
 .env
 
@@ -52,5 +52,4 @@ postgres_data/
 
 # Generated Spark output
 data/processed/
-logs/
 *.crc
