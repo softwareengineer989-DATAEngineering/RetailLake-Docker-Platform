@@ -3,12 +3,12 @@ from abc import ABC, abstractmethod
 from retail_lake.audit.audit_record import AuditRecord
 from retail_lake.utils.logger import get_logger
 from retail_lake.metrics.pipeline_metrics import PipelineMetrics
-
+from retail_lake.config.logging_config import configure_logging
 
 class BasePipeline(ABC):
 
     def __init__(self, pipeline_name: str):
-
+        configure_logging()
         self.logger = get_logger(pipeline_name)
         self.metrics = PipelineMetrics()
         self.audit = AuditRecord(pipeline_name)

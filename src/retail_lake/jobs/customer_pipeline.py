@@ -14,12 +14,8 @@ class CustomerPipeline(BasePipeline):
 
     def run(self):
 
-        spark = (
-            SparkSession.builder
-            .appName("RetailLake Customer Pipeline")
-            .getOrCreate()
-        )
-
+        from retail_lake.config.spark_config import create_spark_session
+        spark = create_spark_session()
         df = read_customer_file(spark)
 
         self.audit.records_read = df.count()
