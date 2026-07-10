@@ -1,6 +1,6 @@
 import argparse
 
-from retail_lake.factory.pipeline_factory import PipelineFactory
+from retail_lake.services.execution_service import PlatformExecutionService
 
 # Register all pipelines
 import retail_lake.jobs.customer_pipeline
@@ -19,13 +19,9 @@ def main():
 
     args = parser.parse_args()
 
-    pipeline = PipelineFactory.create(args.pipeline)
-
-    pipeline.start()
-
-    pipeline.run()
-
-    pipeline.finish()
+    PlatformExecutionService.execute(
+        args.pipeline
+    )
 
 
 if __name__ == "__main__":

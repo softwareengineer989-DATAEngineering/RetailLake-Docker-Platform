@@ -4,7 +4,7 @@ from retail_lake.registry.pipeline_registry import get_pipeline
 class PipelineFactory:
 
     @staticmethod
-    def create(name: str):
+    def create(name, context):
 
         pipeline_class = get_pipeline(name)
 
@@ -13,6 +13,5 @@ class PipelineFactory:
         #         f"Pipeline '{name}' is not registered."
         #     )
 
-        return pipeline_class()
-
+        return pipeline_class(context)
 

@@ -6,12 +6,14 @@ from retail_lake.services.customer_service import CustomerService
 
 class CustomerPipeline(BasePipeline):
 
-    def __init__(self):
-        super().__init__("CustomerPipeline")
+    def __init__(self, context):
+        super().__init__(context)
 
     def run(self):
 
-        spark = create_spark_session()
+        self.context.spark = create_spark_session()
+
+        spark = self.context.spark
 
         service = CustomerService()
 
@@ -28,7 +30,7 @@ class CustomerPipeline(BasePipeline):
                 + report.duplicate_records
         )
 
-        spark.stop()
+        self.context.spark.stop()
 
 
 from retail_lake.registry.pipeline_registry import (
