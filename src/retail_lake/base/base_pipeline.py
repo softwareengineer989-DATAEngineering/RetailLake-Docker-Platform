@@ -7,11 +7,16 @@ from retail_lake.config.logging_config import configure_logging
 
 class BasePipeline(ABC):
 
-    def __init__(self, pipeline_name: str):
+    def __init__(self, context):
         configure_logging()
-        self.logger = get_logger(pipeline_name)
-        self.metrics = PipelineMetrics()
-        self.audit = AuditRecord(pipeline_name)
+
+        self.context = context
+
+        self.logger = context.logger
+
+        self.metrics = context.metrics
+
+        self.audit = context.audit
 
     def start(self):
 
