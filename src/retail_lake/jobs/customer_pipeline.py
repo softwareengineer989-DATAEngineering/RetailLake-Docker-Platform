@@ -31,19 +31,13 @@ class CustomerPipeline(BasePipeline):
         spark.stop()
 
 
-if __name__ == "__main__":
-    
-    pipeline = CustomerPipeline()
+from retail_lake.registry.pipeline_registry import (
+    register_pipeline,
+    get_pipeline
+)
 
-    try:
+register_pipeline(
+    "customer",
+    CustomerPipeline
+)
 
-        pipeline.start()
-
-        pipeline.run()
-
-        pipeline.finish()
-
-    except Exception as e:
-        pipeline.logger.exception(e)
-
-        raise
