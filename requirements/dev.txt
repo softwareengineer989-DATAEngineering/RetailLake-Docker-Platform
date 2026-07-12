@@ -1,0 +1,9 @@
+-r spark.txt
+
+pytest
+
+black
+
+isort
+
+mypy

@@ -1,49 +1,75 @@
 # RetailLake Docker Platform
 
-Enterprise-grade Docker platform for Data Engineering.
+Enterprise-grade Data Engineering Platform.
 
-## Project Goal
+## Overview
 
-Build a production-style Docker platform demonstrating how modern Data Engineering services are containerized, orchestrated, developed, tested and deployed.
+Production-style Docker platform with PySpark, PostgreSQL, Airflow,
+DuckDB, layered architecture, audit logging, metrics and reusable
+pipelines.
+
+## Architecture
+
+``` text
+Platform Launcher -> Pipeline Factory -> Customer Pipeline -> Reader -> Validator -> Transformer -> Writer -> Storage
+```
 
 ## Technology Stack
 
-- Docker
-- Docker Compose
-- Python
-- PySpark
-- PostgreSQL
-- Apache Airflow
-- dbt
-- Kafka (Simulation)
-- GitHub Actions
-- Git
-- Linux
-
-## Current Status
-
-Sprint 0 - Repository Bootstrap
+-   Docker
+-   Docker Compose
+-   Python 3.13
+-   PySpark
+-   PostgreSQL
+-   Airflow
+-   DuckDB
+-   dbt
+-   Kafka (scaffold)
 
 ## Repository Structure
 
-```text
-RetailLake-Docker-Platform/
+``` text
+airflow/
+docker/
+requirements/
+src/
+data/
+postgres/
+duckdb/
+docs/
+tests/
 ```
 
-## Project Roadmap
+## Build
 
-- Sprint 0 - Bootstrap ✅
-- Sprint 1 - Docker Foundation
-- Sprint 2 - PostgreSQL
-- Sprint 3 - PySpark
-- Sprint 4 - Airflow
-- Sprint 5 - dbt
-- Sprint 6 - Kafka
-- Sprint 7 - CI/CD
-- Sprint 8 - Optimization
-- Sprint 9 - Documentation
-- Sprint 10 - Interview Readiness
+``` bash
+docker compose --profile full build
+```
 
----
+## Run
 
-Project bootstrap complete.
+``` bash
+docker compose --profile full up -d
+```
+
+## Execute Pipeline
+
+``` bash
+docker exec retail-spark spark-submit /app/src/retail_lake/launcher/platform_launcher.py customer
+```
+
+## Engineering Practices
+
+-   Feature branches
+-   Pull Requests
+-   Centralized configuration
+-   Platform Context
+-   Factory pattern
+-   Separation of concerns
+
+## Future Roadmap
+
+-   Kafka Streaming
+-   Delta Lake
+-   CI/CD
+-   Monitoring

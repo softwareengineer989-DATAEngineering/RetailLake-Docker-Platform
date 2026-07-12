@@ -28,6 +28,17 @@ def create_spark_session():
             "UTC"
         )
 
+        .config(
+            "spark.driver.extraJavaOptions",
+            "-Dlog4j.configurationFile=/opt/spark/conf/log4j2.properties"
+        )
+
+        .config(
+            "spark.executor.extraJavaOptions",
+            "-Dlog4j.configurationFile=/opt/spark/conf/log4j2.properties"
+        )
+
+
         .getOrCreate()
     )
 

@@ -8,12 +8,8 @@ RUN apt-get update && \
 
 USER airflow
 
-COPY airflow/requirements/requirements-base.txt .
+COPY requirements/base.txt requirements/
+COPY requirements/airflow.txt requirements/
 
 RUN pip install --no-cache-dir \
-    -r requirements-base.txt
-
-COPY airflow/requirements/requirements-platform.txt .
-
-RUN pip install --no-cache-dir \
-    -r requirements-platform.txt
+    -r requirements/airflow.txt

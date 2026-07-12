@@ -1,0 +1,9 @@
+pandas
+
+duckdb
+
+pydantic
+
+python-dotenv
+
+pyyaml

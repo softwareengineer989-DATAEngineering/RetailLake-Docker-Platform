@@ -3,9 +3,7 @@ from retail_lake.base.base_pipeline import BasePipeline
 from retail_lake.config.spark_config import create_spark_session
 from retail_lake.services.customer_service import CustomerService
 
-
 class CustomerPipeline(BasePipeline):
-
     def __init__(self, context):
         super().__init__(context)
 
@@ -31,7 +29,6 @@ class CustomerPipeline(BasePipeline):
         )
 
         self.context.spark.stop()
-
 
 from retail_lake.registry.pipeline_registry import (
     register_pipeline,
