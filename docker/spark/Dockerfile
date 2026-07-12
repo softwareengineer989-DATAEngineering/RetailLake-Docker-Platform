@@ -6,19 +6,47 @@ RUN apt-get update && \
     apt-get install -y \
         default-jdk \
         curl \
+        wget \
+        unzip \
         procps && \
     rm -rf /var/lib/apt/lists/*
 
-COPY spark/requirements/requirements-base.txt .
+ENV JAVA_HOME=/usr/lib/jvm/default-java
+ENV PYTHONPATH=/app/src
+
+# ----------------------------
+# Python Dependencies
+# ----------------------------
+
+COPY requirements/base.txt requirements/
+COPY requirements/spark.txt requirements/
 
 RUN pip install --no-cache-dir \
-    -r requirements-base.txt
+    -r requirements/spark.txt
 
-COPY spark/requirements/requirements-platform.txt .
+# ----------------------------
+# Application Code
+# ----------------------------
 
-RUN pip install --no-cache-dir \
-    -r requirements-platform.txt
+COPY src /app/src
 
-COPY spark /app/spark
+# ----------------------------
+# Data
+# ----------------------------
 
-CMD ["tail", "-f", "/dev/null"]
+COPY data /app/data
+
+# ----------------------------
+# DuckDB
+# ----------------------------
+
+COPY duckdb /app/duckdb
+
+# ----------------------------
+# Spark Logging
+# ----------------------------
+
+COPY docker/spark/conf/log4j2.properties \
+     /opt/spark/conf/log4j2.properties
+
+CMD ["tail","-f","/dev/null"]

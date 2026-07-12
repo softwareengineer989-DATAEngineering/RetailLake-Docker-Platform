@@ -1,6 +1,12 @@
 services:
 
+
+
   postgres:
+    profiles:
+      - spark
+      - airflow
+      - full
 
     build:
       context: .
@@ -38,7 +44,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -U ${POSTGRES_USER}"
+          "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
         ]
 
       interval: 10s
@@ -47,7 +53,7 @@ services:
 
       retries: 5
 
-      start_period: 10s
+      start_period: 15s
 
     networks:
 
@@ -55,6 +61,9 @@ services:
 
 
   spark:
+    profiles:
+      - spark
+      - full
 
     build:
 
@@ -89,7 +98,27 @@ services:
     environment:
       PYTHONPATH: /app/src
 
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "java -version >/dev/null 2>&1 && python --version >/dev/null 2>&1"
+        ]
+
+      interval: 30s
+
+      timeout: 10s
+
+      retries: 3
+
+      start_period: 30s
+
+
   airflow:
+    profiles:
+      - airflow
+      - full
+
     image: retaillake/airflow:1.0.0
 
     build:
@@ -117,13 +146,13 @@ services:
 
       AIRFLOW__CORE__LOAD_EXAMPLES: "False"
 
-      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
+      AIRFLOW__DAG_PROCESSOR__REFRESH_INTERVAL: 60
 
       AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: 60
 
       AIRFLOW__SCHEDULER__PARSING_PROCESSES: 1
 
-      AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "False"
+      AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "True"
 
       AIRFLOW_UID: 50000
 
@@ -144,6 +173,22 @@ services:
     networks:
 
       - retaillake-network
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail http://localhost:8080/api/v2/monitor/health || exit 1"
+        ]
+
+      interval: 30s
+
+      timeout: 10s
+
+      retries: 5
+
+      start_period: 60s
+
 
 volumes:
 
